@@ -1,0 +1,122 @@
+# Shared Embedding Service — HTTP test file
+# Run the server first:  uvicorn main:app --reload
+#
+# Replace <YOUR_API_KEY> with the key returned by /apps/register.
+
+### Health check
+GET http://127.0.0.1:8000/
+Accept: application/json
+
+###
+
+### 1. Register a new app (run once per app — save the returned api_key)
+POST http://127.0.0.1:8000/apps/register
+Content-Type: application/json
+
+{
+  "name": "my-app"
+}
+
+###
+
+### 2. Get info about the authenticated app
+GET http://127.0.0.1:8000/apps/me
+X-API-Key: <YOUR_API_KEY>
+
+###
+
+### 3. Generate raw embeddings (used by RemoteEmbeddingFunction in client apps)
+POST http://127.0.0.1:8000/embed
+Content-Type: application/json
+X-API-Key: <YOUR_API_KEY>
+
+{
+  "texts": ["Hello world", "How are you?"]
+}
+
+###
+
+### 4. Create a collection
+POST http://127.0.0.1:8000/collections
+Content-Type: application/json
+X-API-Key: <YOUR_API_KEY>
+
+{
+  "name": "docs"
+}
+
+###
+
+### 5. List collections
+GET http://127.0.0.1:8000/collections
+X-API-Key: <YOUR_API_KEY>
+
+###
+
+### 6. Add documents (embeddings are generated automatically on the service)
+POST http://127.0.0.1:8000/collections/docs/documents
+Content-Type: application/json
+X-API-Key: <YOUR_API_KEY>
+
+{
+  "documents": [
+    "FastAPI is a modern Python web framework.",
+    "ChromaDB is an open-source vector database.",
+    "Sentence transformers produce dense vector embeddings."
+  ],
+  "ids": ["doc1", "doc2", "doc3"],
+  "metadatas": [
+    {"source": "web"},
+    {"source": "web"},
+    {"source": "paper"}
+  ]
+}
+
+###
+
+### 7. Query — semantic search
+POST http://127.0.0.1:8000/collections/docs/query
+Content-Type: application/json
+X-API-Key: <YOUR_API_KEY>
+
+{
+  "query_texts": ["What is a vector database?"],
+  "n_results": 2
+}
+
+###
+
+### 8. Get documents (paginated)
+GET http://127.0.0.1:8000/collections/docs/documents?limit=10&offset=0
+X-API-Key: <YOUR_API_KEY>
+
+###
+
+### 9. Upsert documents (add if new, overwrite if existing)
+PUT http://127.0.0.1:8000/collections/docs/documents
+Content-Type: application/json
+X-API-Key: <YOUR_API_KEY>
+
+{
+  "documents": ["FastAPI is a high-performance Python web framework built on Starlette."],
+  "ids": ["doc1"]
+}
+
+###
+
+### 10. Delete specific documents
+DELETE http://127.0.0.1:8000/collections/docs/documents
+Content-Type: application/json
+X-API-Key: <YOUR_API_KEY>
+
+{
+  "ids": ["doc3"]
+}
+
+###
+
+### 11. Delete an entire collection
+DELETE http://127.0.0.1:8000/collections/docs
+X-API-Key: <YOUR_API_KEY>
+
+###
