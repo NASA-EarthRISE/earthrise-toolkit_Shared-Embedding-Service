@@ -1,4 +1,4 @@
-# earthrise-toolkit — Shared Embedding Service
+# EarthRise-Toolkit — Shared Embedding Service
 
 [![Python: 3.13](https://img.shields.io/badge/python-3.13-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -323,5 +323,5 @@ guide covering:
 
 ## Privacy & Terms of Use
 
-EarthRISE toolkit - Shared Embedding Service abides to all of NASA's privacy and terms of use as described
+EarthRISE Toolkit - Shared Embedding Service abides to all of NASA's privacy and terms of use as described
 at [https://www.nasa.gov/privacy/](https://www.nasa.gov/privacy/).
