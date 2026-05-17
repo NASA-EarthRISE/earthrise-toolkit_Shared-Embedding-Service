@@ -313,3 +313,15 @@ guide covering:
 ## License
 
 [MIT](LICENSE) — Copyright (c) 2026 NASA EarthRISE
+
+
+## Contact
+
+### Author
+
+- [Billy Ashmall (NASA/USRA)](mailto:billy.ashmall@nasa.gov)
+
+## Privacy & Terms of Use
+
+EarthRISE toolkit - Shared Embedding Service abides to all of NASA's privacy and terms of use as described
+at [https://www.nasa.gov/privacy/](https://www.nasa.gov/privacy/).
