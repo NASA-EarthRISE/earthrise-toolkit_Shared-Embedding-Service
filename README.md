@@ -9,7 +9,7 @@ text embedding generation and vector storage for multiple applications. Each
 registered application receives its own API key and an isolated data namespace,
 so no app can read or write another app's data.
 
-Part of the [EarthRISE Toolkit](https://github.com/NASA-EarthRISE).
+Part of the [EarthRISE Toolkit](https://github.com/orgs/NASA-EarthRISE/repositories?q=earthrise-toolkit_).
 
 ---
 
