@@ -39,3 +39,7 @@ htmlcov/
 
 .claude
 rag.py
+
+model-cache/
+
+gunicorn.conf.py
