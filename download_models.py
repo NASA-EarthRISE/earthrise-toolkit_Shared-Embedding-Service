@@ -11,6 +11,7 @@ Optional — override cache location to match your HF_HOME in .env:
 """
 
 import os
+import shutil
 
 # Force online mode for this script regardless of what .env says
 os.environ.pop("HF_HUB_OFFLINE", None)
@@ -19,7 +20,22 @@ os.environ.pop("TRANSFORMERS_OFFLINE", None)
 from sentence_transformers import SentenceTransformer, CrossEncoder
 
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "BAAI/bge-large-en-v1.5")
-RERANK_MODEL    = os.getenv("RERANK_MODEL",    "BAAI/bge-reranker-large")
+RERANK_MODEL    = os.getenv("RERANK_MODEL",    "BAAI/bge-reranker-v2-m3")
+
+# ------------------------------------------------------------------
+# Purge any broken/partial cache entries for the models we're about
+# to download so that a previous failed attempt doesn't block this one.
+# ------------------------------------------------------------------
+hf_home = os.environ.get("HF_HOME") or os.path.join(os.path.expanduser("~"), ".cache", "huggingface")
+hub_cache = os.path.join(hf_home, "hub")
+
+for model_id in (EMBEDDING_MODEL, RERANK_MODEL):
+    # HF stores models as  models--<org>--<name>
+    folder_name = "models--" + model_id.replace("/", "--")
+    model_cache_path = os.path.join(hub_cache, folder_name)
+    if os.path.exists(model_cache_path):
+        print(f"Removing existing cache for {model_id} …")
+        shutil.rmtree(model_cache_path)
 
 print(f"Downloading embedding model: {EMBEDDING_MODEL}")
 embedder = SentenceTransformer(EMBEDDING_MODEL)

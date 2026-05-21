@@ -5,3 +5,4 @@ chromadb
 pydantic-settings
 requests
 rank-bm25
+safetensors
