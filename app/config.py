@@ -2,7 +2,8 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    embedding_model: str = "all-MiniLM-L6-v2"
+    embedding_model: str = "BAAI/bge-large-en-v1.5"
+    rerank_model: str = "BAAI/bge-reranker-large"
     chroma_persist_dir: str = "./chroma_data"
     db_path: str = "./apps.db"
 

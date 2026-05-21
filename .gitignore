@@ -43,3 +43,8 @@ rag.py
 model-cache/
 
 gunicorn.conf.py
+chroma_data/
+diagnose.py
+example High-quality RAG pipeline.md
+rag_from_toolkit.py
+working_before_switching_rag.py
