@@ -11,9 +11,11 @@ from app.routers import apps, collections, documents, embed
 async def lifespan(app: FastAPI):
     # Initialise the SQLite app-registry on startup
     init_db()
-    from app.embeddings import get_model
+    from app.embeddings import get_model, get_reranker
     import asyncio
-    await asyncio.get_event_loop().run_in_executor(None, get_model)
+    loop = asyncio.get_event_loop()
+    await loop.run_in_executor(None, get_model)
+    await loop.run_in_executor(None, get_reranker)
     yield
 
 

@@ -26,8 +26,19 @@ def _user_name(chroma_prefix: str, full: str) -> str:
 # Public API (all take chroma_prefix from the authenticated app record)
 # ---------------------------------------------------------------------------
 
+# All collections use cosine distance so that query distances are in the [0, 1]
+# range expected by callers (e.g. DISTANCE_THRESHOLD = 0.65 in Django RAG apps).
+# L2 (the ChromaDB default) returns squared Euclidean distances on normalised
+# vectors, which are roughly 2× larger than cosine distances for the same pair
+# of documents — causing every result to exceed a cosine-calibrated threshold.
+_COLLECTION_METADATA = {"hnsw:space": "cosine"}
+
+
 def create_collection(chroma_prefix: str, name: str) -> chromadb.Collection:
-    return get_client().create_collection(_full_name(chroma_prefix, name))
+    return get_client().create_collection(
+        _full_name(chroma_prefix, name),
+        metadata=_COLLECTION_METADATA,
+    )
 
 
 def get_collection(chroma_prefix: str, name: str) -> chromadb.Collection:
@@ -35,7 +46,10 @@ def get_collection(chroma_prefix: str, name: str) -> chromadb.Collection:
 
 
 def get_or_create_collection(chroma_prefix: str, name: str) -> chromadb.Collection:
-    return get_client().get_or_create_collection(_full_name(chroma_prefix, name))
+    return get_client().get_or_create_collection(
+        _full_name(chroma_prefix, name),
+        metadata=_COLLECTION_METADATA,
+    )
 
 
 def list_collections(chroma_prefix: str) -> list[str]:
