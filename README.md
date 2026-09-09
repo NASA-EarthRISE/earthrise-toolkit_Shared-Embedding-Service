@@ -312,7 +312,7 @@ guide covering:
 
 ## License
 
-[MIT](LICENSE) — Copyright (c) 2026 NASA EarthRISE
+[GPLv3](LICENSE) — Copyright (c) 2026 NASA EarthRISE
 
 
 ## Contact
